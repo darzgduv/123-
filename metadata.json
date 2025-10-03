@@ -1,0 +1,5 @@
+{
+  "name": "ESO Image Animator",
+  "description": "An interactive web application that allows users to upload a static image, write a text description of the desired motion, and then uses AI to generate a short animated video based on these inputs. The application is in Arabic and designed for right-to-left (RTL) users.",
+  "requestFramePermissions": []
+}
