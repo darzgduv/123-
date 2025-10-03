@@ -1,5 +1,5 @@
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { AppState, UploadedFile } from './types.ts';
 import { generateVideoFromImage } from './services/geminiService.ts';
 import WelcomeScreen from './components/WelcomeScreen.tsx';
@@ -51,7 +51,7 @@ const App: React.FC = () => {
             setAppState(AppState.Error);
         }
     }, [uploadedFile, prompt]);
-
+    
     const renderContent = () => {
         switch (appState) {
             case AppState.Welcome:

@@ -1,7 +1,9 @@
+
 import { GoogleGenAI } from "@google/genai";
 
-// FIX: Per @google/genai guidelines, the API key must be obtained from process.env.API_KEY.
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// Fix: Use process.env.API_KEY as per the guidelines.
+// The API key is assumed to be available in the environment.
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY! });
 
 const loadingMessages = [
     "جاري تجهيز مولدات الذكاء الاصطناعي...",
@@ -59,8 +61,9 @@ export const generateVideoFromImage = async (
         }
 
         updateStatus("جاري تحميل الفيديو...");
-        // FIX: Per @google/genai guidelines, the API key must be obtained from process.env.API_KEY for the fetch call.
-        const response = await fetch(`${downloadLink}&key=${process.env.API_KEY}`);
+        
+        // Fix: Use process.env.API_KEY for fetching the video as required.
+        const response = await fetch(`${downloadLink}&key=${process.env.API_KEY!}`);
 
         if (!response.ok) {
             throw new Error(`فشل تحميل الفيديو. الحالة: ${response.status}`);
@@ -73,11 +76,10 @@ export const generateVideoFromImage = async (
 
     } catch (error) {
         console.error("Error in generateVideoFromImage:", error);
-        // FIX: Ensure a proper Error object is thrown by wrapping the unknown error.
-        // This resolves the "Argument of type 'unknown' is not assignable to parameter of type 'string'" error on line 58.
         if (error instanceof Error) {
             throw error;
         }
-        throw new Error(String(error) || "An unknown error occurred during video generation.");
+        // Fix: Robustly convert the 'unknown' error type to a string to avoid type errors.
+        throw new Error(String(error ?? '') || "An unknown error occurred during video generation.");
     }
 };
